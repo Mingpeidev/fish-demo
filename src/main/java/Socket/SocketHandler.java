@@ -45,7 +45,7 @@ public class SocketHandler extends IoHandlerAdapter{
     @Override
     public void sessionOpened(IoSession session) throws Exception {
         System.out.println("sessionOpen");
-        new Rxtx_fish().init();
+        new Rxtx_fish().init();;
     }
 
     @Override

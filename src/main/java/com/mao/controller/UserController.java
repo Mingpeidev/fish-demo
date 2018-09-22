@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.mao.proj.User;
 import com.mao.service.UserService;
 
+import Socket.Socketserver;
 import sensor.Rxtx_fish;
 
 @Controller
@@ -26,6 +27,7 @@ public class UserController {
 	// 正常访问login页面
 	@RequestMapping("/login")
 	public String login() {
+		new Socketserver().main(null);
 		return "login";
 	}
 
