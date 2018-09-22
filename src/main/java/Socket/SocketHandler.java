@@ -16,7 +16,7 @@ public class SocketHandler extends IoHandlerAdapter{
     @Override
     public void messageReceived(IoSession session, Object message) throws Exception {
         System.out.println("recieve : " + (String) message);
-        //session.write("hello I am server");
+        session.write("hello I am server");
         //if(message.toString().equals("111")) {
 
             //SendThread map1 = new SendThread(session);
@@ -45,7 +45,7 @@ public class SocketHandler extends IoHandlerAdapter{
     @Override
     public void sessionOpened(IoSession session) throws Exception {
         System.out.println("sessionOpen");
-        new Rxtx_fish().init();;
+        new Rxtx_fish().init();
     }
 
     @Override

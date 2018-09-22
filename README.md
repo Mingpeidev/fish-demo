@@ -1,2 +1,2 @@
 # Fishtest
-利用ssm进行框架搭建，并加入socket和串口通信功能
+在MyEclipse中搭建的SSM框架，并在其中加入了Socket通信和串口通信功能
