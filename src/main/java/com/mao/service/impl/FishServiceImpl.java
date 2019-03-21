@@ -1,5 +1,7 @@
 package com.mao.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.mao.dao.FishMapper;
@@ -25,5 +27,12 @@ public class FishServiceImpl implements FishService{
 		fish.setO2(o2);
 		
 		fishMapper.updateByPrimaryKey(fish);
+	}
+
+
+	@Override
+	public List<Fish> getSettingAll() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

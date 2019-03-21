@@ -322,7 +322,8 @@ public void setSwendu(int swendu) {
 }
  
     // 关闭串口
- 	public void closeSerialPort() {
+ 	@SuppressWarnings("restriction")
+	public void closeSerialPort() {
  		if (serialPort != null) {
  			
  			serialPort.notifyOnDataAvailable(false);

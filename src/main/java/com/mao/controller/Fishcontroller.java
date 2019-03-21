@@ -1,5 +1,7 @@
 package com.mao.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,9 +11,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+
+import com.mao.proj.Fish;
 import com.mao.proj.User;
 import com.mao.service.FishService;
 import com.mao.service.UserService;
+import com.mao.service.impl.FishServiceImpl;
+
 import Socket.Socketserver;
 import sensor.Rxtx_fish;
 
@@ -33,6 +39,14 @@ public class Fishcontroller {
 			@RequestParam("wendu") int wendu,
 			@RequestParam("o2") int o2) {
 		fishService.updataSetting(id,smart,water,wendu,o2);
+	}
+	
+	@RequestMapping("getSettingAll")
+	@ResponseBody
+	public SsmResult getLogin() {
+		System.out.println("fef");
+		List<Fish> list = fishService.getSettingAll();
+		return SsmResult.ok(list);
 	}
 	
 }
