@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TooManyListenersException;
 
+@SuppressWarnings("restriction")
 public class Rxtx_fish implements SerialPortEventListener {
 	
 	String light_control = "";
@@ -43,7 +44,7 @@ public class Rxtx_fish implements SerialPortEventListener {
      * 初始化串口
      * @param baudRate 波特率
      */
-    @SuppressWarnings("restriction")
+
 	public void init() {
     	
     	try {
@@ -83,7 +84,6 @@ public class Rxtx_fish implements SerialPortEventListener {
     /**
      * 监听函数
      */
-    @SuppressWarnings("restriction")
 	public void serialEvent(SerialPortEvent serialPortEvent) {
         switch (serialPortEvent.getEventType()) {
         case SerialPortEvent.BI: // 通讯中断
@@ -322,7 +322,6 @@ public void setSwendu(int swendu) {
 }
  
     // 关闭串口
- 	@SuppressWarnings("restriction")
 	public void closeSerialPort() {
  		if (serialPort != null) {
  			
