@@ -1,12 +1,12 @@
 package com.mao.service;
 
-import java.util.List;
-
 import com.mao.proj.Fish;
+
+import java.util.List;
 
 public interface FishService {
 
-	public void updataSetting(int id, int smart, int water, int wendu, int o2);
-	public List<Fish> getSettingAll();
+    public void updataSetting(int id, int smart, int water, int wendu, int o2);
 
+    public List<Fish> getSettingAll();
 }
