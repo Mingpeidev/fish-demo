@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<form action="/Fishtest/user/checkLogin" method="post">
+<form action="/FishDemo/user/checkLogin" method="post">
     <table>
         <tr>
             <td>用户名:</td>
