@@ -32,14 +32,19 @@ public class UserController {
     // 表单提交过来的路径
     @RequestMapping("/checkLogin")
     public String checkLogin(User user, Model model) {
-        // 调用service方法
-        user = userService.checkLogin(user.getUsername(), user.getPassword());
-        // 若有user则添加到model里并且跳转到成功页面
-        if (user != null) {
-            model.addAttribute("user", user);
-            return "success";
+        try {
+            // 调用service方法
+            user = userService.checkLogin(user.getUsername(), user.getPassword());
+            // 若有user则添加到model里并且跳转到成功页面
+            if (user != null) {
+                model.addAttribute("user", user);
+                return "success";
+            } else {
+                return "fail";
+            }
+        } catch (Exception e) {
+            return "fail";
         }
-        return "fail";
     }
 
     // 测试超链接跳转到另一个页面是否可以取到session值
