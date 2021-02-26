@@ -10,15 +10,17 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpSession;
 
+/**
+ * @author Mingpeidev
+ * 这里用了@SessionAttributes，可以直接把model中的user(也就key)放入其中,这样保证了session中存在user这个对象
+ */
 @Controller
 @RequestMapping("/user")
-
-//这里用了@SessionAttributes，可以直接把model中的user(也就key)放入其中,这样保证了session中存在user这个对象
 @SessionAttributes("user")
 public class UserController {
 
     @Autowired
-    private UserService userServivce;
+    private UserService userService;
 
 
     // 正常访问login页面
@@ -31,7 +33,7 @@ public class UserController {
     @RequestMapping("/checkLogin")
     public String checkLogin(User user, Model model) {
         // 调用service方法
-        user = userServivce.checkLogin(user.getUsername(), user.getPassword());
+        user = userService.checkLogin(user.getUsername(), user.getPassword());
         // 若有user则添加到model里并且跳转到成功页面
         if (user != null) {
             model.addAttribute("user", user);
@@ -43,7 +45,6 @@ public class UserController {
     // 测试超链接跳转到另一个页面是否可以取到session值
     @RequestMapping("/anotherpage")
     public String hrefpage() {
-
         return "anotherpage";
     }
 

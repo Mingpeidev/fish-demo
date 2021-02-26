@@ -19,7 +19,6 @@ public class UserServiceImpl implements UserService {
 
         User user = userMapper.findByUsername(username);
         if (user != null && user.getPassword().equals(password)) {
-
             return user;
         }
         return null;

@@ -16,9 +16,7 @@ public class FishServiceImpl implements FishService {
 
 
     @Override
-    public void updataSetting(int id, int smart, int water, int wendu, int o2) {
-        // TODO Auto-generated method stub
-
+    public void updateSetting(int id, int smart, int water, int wendu, int o2) {
         Fish fish = new Fish();
         fish.setId(id);
         fish.setSmart(smart);
@@ -32,7 +30,6 @@ public class FishServiceImpl implements FishService {
 
     @Override
     public List<Fish> getSettingAll() {
-        // TODO Auto-generated method stub
         return null;
     }
 }

@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface FishService {
 
-    public void updataSetting(int id, int smart, int water, int wendu, int o2);
+    public void updateSetting(int id, int smart, int water, int wendu, int o2);
 
     public List<Fish> getSettingAll();
 }

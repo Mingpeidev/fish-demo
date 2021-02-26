@@ -17,6 +17,12 @@ public class SocketHandler extends IoHandlerAdapter {
 
     private Timer timer;
 
+    /**
+     * 开关标志位
+     */
+    private boolean O2Flag = true;
+    private boolean WaterFlag = true;
+
     private int smart = 0;
     private int water;
     private int wendu;
@@ -25,55 +31,6 @@ public class SocketHandler extends IoHandlerAdapter {
     @Override
     public void exceptionCaught(IoSession session, Throwable cause) throws Exception {
         System.out.println("exceptionCaught: " + cause);
-    }
-
-    @Override
-    public void messageReceived(IoSession session, Object message) throws Exception {
-        System.out.println("recieve : " + (String) message);
-        //session.write("hello I am server");
-        if (message.toString().equals("111")) {
-            System.out.println("收到111------------------------------");
-            SendThread map1 = new SendThread(session);
-            map1.start();
-        } else if (message.toString().trim().length() == 2) {
-            System.out.println("收到控制------------------------------");
-            testRxtx.sendMsg((String) message);
-
-        } else {
-            System.out.println("收到json------------------------------");
-
-            //System.out.println(message.toString());
-
-            JSONObject json = new JSONObject(message.toString());
-
-            smart = json.getInt("smart");
-            wendu = json.getInt("watertemp");
-            water = json.getInt("watertime");
-            o2 = json.getInt("o2");
-
-            System.out.println("getJson数据>" + json.getInt("id") + json.getInt("smart") + json.getInt("watertemp") + json.getInt("watertime") + json.getInt("o2"));
-
-            if (smart == 1) {
-
-                timer = new Timer();
-
-                testRxtx.setSwendu(wendu);
-                testRxtx.setSmart(smart);
-                O2TimerTask task = new O2TimerTask();
-                O2_CloseTimerTask task2 = new O2_CloseTimerTask();
-                WaterTimerTask task3 = new WaterTimerTask();
-                Water_CloseTimerTask task4 = new Water_CloseTimerTask();
-                timer.schedule(task, 0, o2);
-                timer.schedule(task2, 10000, o2);
-                timer.schedule(task3, 0, water);
-                timer.schedule(task4, 10000, water);
-
-            } else {
-                testRxtx.setSmart(smart);
-                timer.cancel();
-            }
-        }
-
     }
 
     @Override
@@ -95,6 +52,53 @@ public class SocketHandler extends IoHandlerAdapter {
 
     @Override
     public void sessionIdle(IoSession session, IdleStatus status) throws Exception {
+    }
+
+    @Override
+    public void messageReceived(IoSession session, Object message) throws Exception {
+        System.out.println("recieve : " + (String) message);
+        //session.write("hello I am server");
+        if (message.toString().equals("111")) {
+            System.out.println("收到111------------------------------");
+            SendThread map1 = new SendThread(session);
+            map1.start();
+        } else if (message.toString().trim().length() == 2) {
+            System.out.println("收到控制------------------------------");
+            testRxtx.sendMsg((String) message);
+
+        } else {
+            System.out.println("收到json------------------------------");
+
+            JSONObject json = new JSONObject(message.toString());
+
+            //智能控制
+            smart = json.getInt("smart");
+            //水温
+            wendu = json.getInt("watertemp");
+            //间隔放水时间
+            water = json.getInt("watertime");
+            //间隔供氧气时间
+            o2 = json.getInt("o2");
+
+            System.out.println("getJson数据>" + json.getInt("id") + json.getInt("smart") + json.getInt("watertemp") + json.getInt("watertime") + json.getInt("o2"));
+
+            testRxtx.setSmart(smart);
+            if (smart == 1) {
+
+                timer = new Timer();
+                //设置温度阈值
+                testRxtx.setSwendu(wendu);
+
+                O2OpenAndCloseTimerTask task = new O2OpenAndCloseTimerTask();
+                WaterOpenAndCloseTimerTask task2 = new WaterOpenAndCloseTimerTask();
+                //定时开关供氧
+                timer.schedule(task, 0, o2);
+                //定时开关水
+                timer.schedule(task2, 10000, water);
+            } else {
+                timer.cancel();
+            }
+        }
     }
 
     class SendThread extends Thread {
@@ -122,84 +126,53 @@ public class SocketHandler extends IoHandlerAdapter {
                             session.write("02 07 18 00 F1 " + ID + " " + testRxtx.dataAll.get(ID) + " 11");
                             // System.out.println("输出："+"02 07 18 00 F1 "+ID + " " +
                             // testRxtx.dataAll.get(ID)+" 11");
-
                         } else if (ID.equals("D7 15 01")) {
                             session.write("02 08 18 00 F1 " + ID + " " + testRxtx.dataAll.get(ID) + " 11");
                             // System.out.println("输出："+"02 08 18 00 F1 "+ID + " " +
                             // testRxtx.dataAll.get(ID)+" 11");
-
                         } else if (ID.equals("00 A0 01")) {
                             session.write("02 07 18 00 F1 " + ID + " " + testRxtx.dataAll.get(ID) + " 11");
                             // System.out.println("输出："+"02 07 18 00 F1 "+ID + " " +
                             // testRxtx.dataAll.get(ID)+" 11");
-
                         } else if (ID.equals("47 8C 01")) {
                             session.write("02 07 18 00 F1 " + ID + " " + testRxtx.dataAll.get(ID) + " 11");
                             // System.out.println("输出："+"02 07 18 00 F1 "+ID + " " +
                             // testRxtx.dataAll.get(ID)+" 11");
-
                         } else if (ID.equals("47 8C 02")) {
                             session.write("02 07 18 00 F1 " + ID + " " + testRxtx.dataAll.get(ID) + " 11");
                             // System.out.println("输出："+"02 07 18 00 F1 "+ID + " " +
                             // testRxtx.dataAll.get(ID)+" 11");
-
                         }
                     }
 
-                    // session.write(testRxtx.xxx);
-                    // System.out.println("输出："+testRxtx.xxx);
-
                 } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
-
             }
-
         }
     }
 
-    public class O2TimerTask extends TimerTask {
-
+    public class O2OpenAndCloseTimerTask extends TimerTask {
         public void run() {
-
-            O2Smart("1");
+            if (O2Flag) {
+                testRxtx.sendO2Msg("1");
+                O2Flag = false;
+            } else {
+                testRxtx.sendO2Msg("0");
+                O2Flag = true;
+            }
         }
     }
 
-    public class O2_CloseTimerTask extends TimerTask {
-
+    public class WaterOpenAndCloseTimerTask extends TimerTask {
         public void run() {
-
-            O2Smart("0");
+            if (WaterFlag) {
+                testRxtx.sendWaterMsg("1");
+                WaterFlag = false;
+            } else {
+                testRxtx.sendWaterMsg("0");
+                WaterFlag = true;
+            }
         }
-    }
-
-    public void O2Smart(String x) {
-
-        testRxtx.sendO2Msg(x);
-
-    }
-
-    public class WaterTimerTask extends TimerTask {
-
-        public void run() {
-
-            WaterSmart("1");
-        }
-    }
-
-    public class Water_CloseTimerTask extends TimerTask {
-
-        public void run() {
-
-            WaterSmart("0");
-        }
-    }
-
-    public void WaterSmart(String x) {
-
-        testRxtx.sendWaterMsg(x);
-
     }
 }

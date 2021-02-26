@@ -7,7 +7,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.*;
 
-@SuppressWarnings("restriction")
 public class Rxtx_fish implements SerialPortEventListener {
 
     String light_control = "";
@@ -18,8 +17,7 @@ public class Rxtx_fish implements SerialPortEventListener {
     private int Swendu = 26;
     private int Smart = 0;
 
-
-    private static final String DEMONAME = "串口测试";
+    private static final String DEMO_NAME = "串口测试";
     /**
      * 检测系统中可用的端口
      */
@@ -35,20 +33,14 @@ public class Rxtx_fish implements SerialPortEventListener {
     // 地址
     public Map<String, String> dataAll = new HashMap<String, String>();
 
-    public String xxx = new String("000");
-
     /**
      * 初始化串口
-     *
-     * @param baudRate 波特率
      */
-
     public void init() {
-
         try {
             portId = CommPortIdentifier.getPortIdentifier("COM6");
             System.out.println("打开端口：" + portId.getName());
-            serialPort = (SerialPort) portId.open(DEMONAME, 2000);
+            serialPort = (SerialPort) portId.open(DEMO_NAME, 2000);
             //设置串口监听
             serialPort.addEventListener(this);
             //设置开启监听
@@ -256,7 +248,6 @@ public class Rxtx_fish implements SerialPortEventListener {
         public void run() {
 
             // 2.从容器中获取mapper
-
             while (true) {
                 try {
                     sleep(3000);
@@ -268,7 +259,6 @@ public class Rxtx_fish implements SerialPortEventListener {
                     }
 
                 } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
 
