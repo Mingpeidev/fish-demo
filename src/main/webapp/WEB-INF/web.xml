@@ -23,7 +23,7 @@
 
     <!-- 配置DispatcherServlet -->
     <servlet>
-        <servlet-name>Fishtest</servlet-name>
+        <servlet-name>FishDemo</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <!-- 配置springMVC需要加载的配置文件
             spring-dao.xml,spring-service.xml,spring-web.xml
@@ -36,7 +36,7 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
-        <servlet-name>Fishtest</servlet-name>
+        <servlet-name>FishDemo</servlet-name>
         <!-- 默认匹配所有的请求 -->
         <url-pattern>/</url-pattern>
     </servlet-mapping>

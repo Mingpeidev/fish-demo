@@ -14,9 +14,9 @@
 </div>
 this is success page!
 
-<a href="/Fishtest/user/anotherpage">点我跳到另一个页面</a>
+<a href="/FishDemo/user/anotherpage">点我跳到另一个页面</a>
 
-<form action="/Fishtest/user/outLogin">
+<form action="/FishDemo/user/outLogin">
     <table>
         <tr>
             <td><input type="submit" value="退出登录"></td>

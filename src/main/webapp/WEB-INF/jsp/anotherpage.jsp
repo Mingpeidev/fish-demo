@@ -11,7 +11,7 @@
 <div>
     <strong> ${sessionScope.user.username}!!!!! </strong>
 </div>
-<form action="/Fishtest/user/outLogin">
+<form action="/FishDemo/user/outLogin">
     <table>
         <tr>
             <td><input type="submit" value="退出登录"></td>
