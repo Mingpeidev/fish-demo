@@ -7,17 +7,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
 import java.util.List;
 
 /**
  * @author Mingpeidev
- * @description 这里用了@SessionAttributes，可以直接把model中的user(也就key)放入其中,这样保证了session中存在user这个对象
+ * @description 鱼
  */
 @Controller
 @RequestMapping("/user")
-@SessionAttributes("user")
 public class FishController {
 
     @Autowired
@@ -35,8 +33,7 @@ public class FishController {
 
     @RequestMapping("getSettingAll")
     @ResponseBody
-    public SsmResult getLogin() {
-        System.out.println("fef");
+    public SsmResult getSettingAll() {
         List<Fish> list = fishService.getSettingAll();
         return SsmResult.ok(list);
     }
